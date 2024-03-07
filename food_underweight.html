@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Underweight Recipes</title>
+</head>
+<body>
+    <h1>Underweight Recipes</h1>
+    <h2>Recipes based on your available ingredients:</h2>
+    
+    <h3>Avocado Toast</h3>
+    <p><strong>Ingredients:</strong> Avocado, whole-grain bread, lemon juice, salt, pepper</p>
+    <p><strong>Procedure:</strong> Mash the avocado with lemon juice, salt, and pepper. Spread the mixture on toasted whole-grain bread.</p>
+
+    <h3>Nutty Smoothie</h3>
+    <p><strong>Ingredients:</strong> Banana, almond butter, almond milk, honey, ice cubes</p>
+    <p><strong>Procedure:</strong> Blend banana, almond butter, almond milk, honey, and ice cubes until smooth.</p>
+
+    <h3>Greek Yogurt Parfait</h3>
+    <p><strong>Ingredients:</strong> Greek yogurt, granola, berries, honey</p>
+    <p><strong>Procedure:</strong> Layer Greek yogurt, granola, and berries in a glass. Drizzle with honey.</p>            <script>
+        // Retrieve BMI category from local storage
+        const bmiCategory = localStorage.getItem('bmiCategory');
+
+        // Define recipes based on BMI category
+        const recipes = {
+            underweight: [
+                { name: 'Avocado Toast', ingredients: ['Avocado', 'whole-grain bread', 'lemon juice', 'salt', 'pepper', '1'], procedure: 'Mash the avocado with lemon juice, salt, and pepper. Spread the mixture on toasted whole-grain bread.' },
+                { name: 'Nutty Smoothie', ingredients: ['Banana', 'almond butter', 'almond milk', 'honey', 'ice cubes', '1'], procedure: 'Blend banana, almond butter, almond milk, honey, and ice cubes until smooth.' },
+                { name: 'Greek Yogurt Parfait', ingredients: ['Greek yogurt', 'granola', 'berries', 'honey', '1'], procedure: 'Layer Greek yogurt, granola, and berries in a glass. Drizzle with honey.' }
+            ],
+            normal: [
+                { name: 'Grilled Chicken Salad', ingredients: ['Chicken breast', 'lettuce', 'tomatoes', 'cucumbers', 'red onion', 'olive oil', 'lemon juice', 'salt', 'pepper', '1'], procedure: 'Grill chicken breast and slice. Toss with lettuce, tomatoes, cucumbers, and red onion. Dress with olive oil, lemon juice, salt, and pepper.' },
+                { name: 'Salmon Quinoa Bowl', ingredients: ['Salmon fillet', 'quinoa', 'spinach', 'avocado', 'cherry tomatoes', 'balsamic vinaigrette', '1'], procedure: 'Cook quinoa according to package instructions. Grill salmon fillet. Serve over cooked quinoa with spinach, avocado, cherry tomatoes, and balsamic vinaigrette.' },
+                { name: 'Turkey and Veggie Stir-Fry', ingredients: ['Lean turkey', 'broccoli', 'bell peppers', 'carrots', 'soy sauce', 'garlic', 'ginger', 'olive oil', '1'], procedure: 'Stir-fry lean turkey and vegetables in olive oil with garlic and ginger. Season with soy sauce.' }
+            ],
+            overweight: [
+                { name: 'Vegetable Soup', ingredients: ['Broccoli', 'cauliflower', 'carrots', 'celery', 'onion', 'garlic', 'vegetable broth', 'diced tomatoes', 'thyme', 'oregano', 'salt', 'pepper', '1'], procedure: 'Sauté onion and garlic in olive oil. Add vegetables, vegetable broth, diced tomatoes, and spices. Simmer until vegetables are tender.' },
+                { name: 'Turkey Meatballs with Whole-Grain Pasta', ingredients: ['Lean ground turkey', 'whole-grain pasta', 'marinara sauce', 'onion', 'garlic', 'breadcrumbs', 'egg', 'parsley', 'salt', 'pepper', '1'], procedure: 'Mix ground turkey with chopped onion, garlic, breadcrumbs, egg, parsley, salt, and pepper. Form into meatballs and bake. Serve with whole-grain pasta and marinara sauce.' },
+                { name: 'Oatmeal with Fruit', ingredients: ['Oats', 'almond milk', 'banana', 'berries', 'honey', '1'], procedure: 'Cook oats with almond milk according to package instructions. Top with sliced banana, berries, and honey.' }
+            ]
+        };
+
+        // Function to display recipes based on BMI category
+        function displayRecipes(category) {
+            const recipeContainer = document.getElementById('recipes');
+            const allRecipes = recipes.underweight.concat(recipes.normal, recipes.overweight);
+            if (category === 'normal' || !category) {
+                allRecipes.forEach(recipe => {
+                    const recipeElement = document.createElement('div');
+                    recipeElement.innerHTML = `
+                        <h3>${recipe.name}</h3>
+                        <p><strong>Ingredients:</strong> ${recipe.ingredients.join(', ')}</p>
+                        <p><strong>Procedure:</strong> ${recipe.procedure}</p>
+                    `;
+                    recipeContainer.appendChild(recipeElement);
+                });
+            } else {
+                const categoryRecipes = recipes[category];
+                if (categoryRecipes) {
+                    categoryRecipes.forEach(recipe => {
+                        const recipeElement = document.createElement('div');
+                        recipeElement.innerHTML = `
+                            <h3>${recipe.name}</h3>
+                            <p><strong>Ingredients:</strong> ${recipe.ingredients.join(', ')}</p>
+                            <p><strong>Procedure:</strong> ${recipe.procedure}</p>
+                        `;
+                        recipeContainer.appendChild(recipeElement);
+                    });
+                } else {
+                    recipeContainer.innerHTML = '<p>No recipes available for this BMI category.</p>';
+                }
+            }
+        }
+
+        // Display recipes based on BMI category
+        displayRecipes(bmiCategory);
+    </script>
+
+</body>
+</html>
